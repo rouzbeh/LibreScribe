@@ -301,8 +301,8 @@ class STFParser(object):
 class PreParser(STFParser):
     def __init__(self, *args):
         super(PreParser, self).__init__(*args)
-        self.minx=8000
-        self.miny=8000
+        self.minx=6857
+        self.miny=8127
         self.maxx=0
         self.maxy=0
 
@@ -326,15 +326,23 @@ pref = file(stf_file)
 prep = PreParser(pref)
 prep.parse()
 
-if prep.maxx > 8000:
-    prep.maxx = 8000
-if prep.maxy > 8000:
-    prep.maxy = 8000
+# width="6857" height="8127"
+
+try:
+#if prep.maxx > 6857:
+    prep.maxx = 6857
+#if prep.maxy > 8127:
+    prep.maxy = 8127
+except:
+    pass
+
+scalex = (8.5*72)/prep.maxx
+scaley = (11.0*72)/prep.maxy
 
 #surface = cairo.ImageSurface(cairo.FORMAT_RGB24, prep.maxx-prep.minx, prep.maxy-prep.miny)
-surface = cairo.PDFSurface(png_file, (prep.maxx-prep.minx)/1.0, (prep.maxy-prep.miny)/1.0)
+surface = cairo.PDFSurface(png_file, 8.5*72, 11.0*72)
 ctx = cairo.Context(surface)
-
+ctx.scale(scalex, scaley)
 print float(fgRed)
 print float(fgGreen)
 print float(fgBlue)
@@ -360,9 +368,9 @@ class Parser(STFParser):
     def handle_point(self, x, y, f, time):
         if f:
             if self.last_force:
-                ctx.line_to(x-prep.minx, y-prep.miny)
+                ctx.line_to((x-prep.minx), (y-prep.miny))
             else:
-                ctx.move_to(x-prep.minx, y-prep.miny)
+                ctx.move_to((x-prep.minx), (y-prep.miny))
         self.last_force = 1
 
 try:
@@ -375,4 +383,5 @@ p = Parser(f)
 p.parse()
 
 ctx.stroke()
+surface.show_page()
 #surface.write_to_png(png_file)
