@@ -11,18 +11,18 @@ AR = sh -c -x "ar
 LD = sh -c -x "g++
 WINDRES = windres
 
-INC =  -I/usr/include/libxml2 -Iinclude -Ilibusb/libusb
+INC =  -Iinclude `pkg-config --cflags libusb-1.0` `pkg-config --cflags libxml-2.0`
 CFLAGS =  -Wall `wx-config --cflags` -Winvalid-pch -include wx_pch.h `python-config --include` `pkg-config --libs --cflags glib-2.0` -DWX_PRECOMP
 RESINC = 
-LIBDIR =  -Llibusb/libusb/.libs -Llibusb/libusb
-LIB =  -lopenobex -lxml2 -ludev libusb/libusb/.libs/libusb-1.0.a libusb/libusb/.libs/libusb-1.0.so
-LDFLAGS =  `wx-config --libs` `python-config --libs` -lglib-2.0 `wx-config --cflags` -Winvalid-pch -include wx_pch.h `pkg-config --libs --cflags glib-2.0`
+LIBDIR =
+LIB =
+LDFLAGS =  `wx-config --libs` `python-config --libs` -lglib-2.0 `wx-config --cflags` -Winvalid-pch -include wx_pch.h `pkg-config --libs --cflags glib-2.0` `pkg-config --libs libusb-1.0` `pkg-config --libs libxml-2.0` `pkg-config --libs openobex` `pkg-config --libs libudev`
 
 INC_DEBUG =  $(INC)
 CFLAGS_DEBUG =  $(CFLAGS) -O3 -g
 RESINC_DEBUG =  $(RESINC)
 RCFLAGS_DEBUG =  $(RCFLAGS)
-LIBDIR_DEBUG =  $(LIBDIR) -Llibusb/libusb
+LIBDIR_DEBUG =  $(LIBDIR)
 LIB_DEBUG = $(LIB)
 LDFLAGS_DEBUG =  $(LDFLAGS)
 OBJDIR_DEBUG = obj/Debug
@@ -50,9 +50,6 @@ clean: clean_debug clean_release
 
 before_build: 
 	cd $(PROJECT_DIRECTORY) && rm -rfv ./bin
-	cd $(PROJECT_DIRECTORY)libusb/ && [ -f configure ] || sh autogen.sh
-	cd $(PROJECT_DIRECTORY)libusb/ && [ -f Makefile ] || ./configure
-	cd $(PROJECT_DIRECTORY)libusb/ && [ -f libusb/.libs/libusb-1.0.a ] || make
 
 after_build: 
 	cd $(PROJECT_DIRECTORY)
