@@ -2,6 +2,7 @@
 
 import cairo
 import sys
+import os
 
 try:
     bgRed
@@ -32,6 +33,11 @@ try:
     fgBlue
 except NameError:
     fgBlue = 0
+
+try:
+    png_file
+except NameError:
+    png_file = sys.argv[1] + ".pdf"
 
 class BitReader(object):
     def __init__(self, stream):
@@ -325,7 +331,8 @@ if prep.maxx > 8000:
 if prep.maxy > 8000:
     prep.maxy = 8000
 
-surface = cairo.ImageSurface(cairo.FORMAT_RGB24, prep.maxx-prep.minx, prep.maxy-prep.miny)
+#surface = cairo.ImageSurface(cairo.FORMAT_RGB24, prep.maxx-prep.minx, prep.maxy-prep.miny)
+surface = cairo.PDFSurface(png_file, (prep.maxx-prep.minx)/1.0, (prep.maxy-prep.miny)/1.0)
 ctx = cairo.Context(surface)
 
 print float(fgRed)
@@ -368,4 +375,4 @@ p = Parser(f)
 p.parse()
 
 ctx.stroke()
-surface.write_to_png(png_file)
+#surface.write_to_png(png_file)

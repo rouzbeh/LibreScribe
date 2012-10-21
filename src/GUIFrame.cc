@@ -804,7 +804,7 @@ void GUIFrame::decryptStfFile(const char* filename) {
     int fgRGB[] = {(int)renderingForegroundColor->Red(), (int)renderingForegroundColor->Green(), (int)renderingForegroundColor->Blue()};
     int bgRGB[] = {(int)renderingBackgroundColor->Red(), (int)renderingBackgroundColor->Green(), (int)renderingBackgroundColor->Blue()};
     std::string setFilesAndColors = "stf_file = \"" + (std::string)filename + "\"\n" +
-                       "png_file = \"" + (std::string)filename + ".png\"\n" +
+                       "png_file = \"" + (std::string)filename + ".pdf\"\n" +
                        "fgRed = \"" + ConvertIntegerToString(fgRGB[0]) + "\"\n" +
                        "fgGreen = \"" + ConvertIntegerToString(fgRGB[1]) + "\"\n" +
                        "fgBlue = \"" + ConvertIntegerToString(fgRGB[2]) + "\"\n" +
@@ -833,8 +833,8 @@ std::vector<std::string> GUIFrame::GetDirectoryContents(const char* path, const 
         while((d = readdir(dir)) != 0) {
             if(/*d->d_type == DT_DIR && */strcmp(d->d_name,".") != 0 && strcmp(d->d_name,"..") != 0) {
                 std::string dname = d->d_name;
-                if ((!ignorePNG) || (dname.find(".png") == std::string::npos)) {
-                    //we either aren't ignoring png files or the filename doesn't contain ".png"
+                if ((!ignorePNG) || (dname.find(".pdf") == std::string::npos)) {
+                    //we either aren't ignoring png files or the filename doesn't contain ".pdf"
                     files.push_back(d->d_name);
                     printf("   %s\n",d->d_name);
                 }
@@ -865,9 +865,9 @@ void GUIFrame::OnNotebookBrowserItemActivated(wxListEvent& event) {
                         statusBar->SetStatusText(_("Decrypting the STF file, please wait..."), 1);
                         decryptStfFile(filePath.c_str());
                         statusBar->SetStatusText(oldStatus, 1);
-                        filePath = filePath + ".png";
+                        filePath = filePath + ".pdf";
                         if (CheckIfFileExists(filePath.c_str())) {
-                            printf("STF file decrypted. Path of PNG file: %s\n", filePath.c_str());
+                            printf("STF file decrypted. Path of PDF file: %s\n", filePath.c_str());
                             xdgOpenFile(filePath.c_str());
                         } else {
                             printf("STF file decryption error: file does not exist: %s\n", filePath.c_str());
