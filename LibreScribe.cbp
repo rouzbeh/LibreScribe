@@ -1,103 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
-	<Project>
-		<Option title="LibreScribe" />
-		<Option pch_mode="2" />
-		<Option compiler="gcc" />
-		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/LibreScribe" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="0" />
-				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="2" />
-				<Compiler>
-					<Add option="-O3" />
-					<Add option="-g" />
-				</Compiler>
-				<Linker>
-					<Add directory="libusb/libusb" />
-				</Linker>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/LibreScribe" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="0" />
-				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="2" />
-				<Compiler>
-					<Add option="-O3" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-		</Build>
-		<Compiler>
-			<Add option="-Wall" />
-			<Add option="`wx-config --cflags`" />
-			<Add option="-Winvalid-pch" />
-			<Add option="-include wx_pch.h" />
-			<Add option="`python-config --include`" />
-			<Add option="`pkg-config --libs --cflags glib-2.0`" />
-			<Add option="-DWX_PRECOMP" />
-			<Add directory="/usr/include/libxml2" />
-			<Add directory="include" />
-			<Add directory="libusb/libusb" />
-		</Compiler>
-		<Linker>
-			<Add option="`wx-config --libs` `python-config --libs` -lglib-2.0 `wx-config --cflags` -Winvalid-pch" />
-			<Add option="-include wx_pch.h `pkg-config --libs --cflags glib-2.0`" />
-			<Add library="openobex" />
-			<Add library="xml2" />
-			<Add library="udev" />
-			<Add library="libusb/libusb/.libs/libusb-1.0.a" />
-			<Add library="libusb/libusb/.libs/libusb-1.0.so" />
-			<Add directory="libusb/libusb/.libs" />
-			<Add directory="libusb/libusb" />
-		</Linker>
-		<ExtraCommands>
-			<Add before="cd $(PROJECT_DIRECTORY) &amp;&amp; rm -rfv ./bin" />
-			<Add before="cd $(PROJECT_DIRECTORY)libusb/ &amp;&amp; [ -f configure ] || sh autogen.sh" />
-			<Add before="cd $(PROJECT_DIRECTORY)libusb/ &amp;&amp; [ -f Makefile ] || ./configure" />
-			<Add before="cd $(PROJECT_DIRECTORY)libusb/ &amp;&amp; [ -f libusb/.libs/libusb-1.0.a ] || make" />
-			<Add after="cd $(PROJECT_DIRECTORY)" />
-			<Add after="find ./bin/ -mindepth 1 -maxdepth 1 -type d | xargs -n 1 cp -rfv -L ./res ./xdg" />
-			<Add after="find ./bin/ -mindepth 1 -maxdepth 1 -type d | xargs -n 1 cp -fv -L ./stf.py ./convert_stfs.sh" />
-			<Mode after="always" />
-		</ExtraCommands>
-		<Unit filename="src/AboutDialog.cc" />
-		<Unit filename="include/AboutDialog.h" />
-		<Unit filename="src/DeviceInfo.cc" />
-		<Unit filename="include/DeviceInfo.h" />
-		<Unit filename="src/GUIFrame.cc" />
-		<Unit filename="include/GUIFrame.h" />
-		<Unit filename="src/LibreScribe.cc" />
-		<Unit filename="include/LibreScribe.h" />
-		<Unit filename="include/Smartpen.h" />
-		<Unit filename="src/BackgroundMonitor.cc" />
-		<Unit filename="src/Smartpen.cc" />
-		<Unit filename="include/wx_pch.h">
-			<Option compile="1" />
-			<Option weight="0" />
-		</Unit>
-		<Unit filename="wxsmith/AboutDialog.wxs" />
-		<Unit filename="wxsmith/DeviceInfo.wxs" />
-		<Unit filename="wxsmith/GUIFrame.wxs" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-			<lib_finder disable_auto="1" />
-			<wxsmith version="1">
-				<gui name="wxWidgets" src="LibreScribe.cc" main="GUIFrame" init_handlers="necessary" language="CPP" />
-				<resources>
-					<wxFrame wxs="wxsmith/GUIFrame.wxs" src="GUIFrame.cc" hdr="GUIFrame.h" name="GUIFrame" language="CPP" />
-					<wxDialog wxs="wxsmith/DeviceInfo.wxs" src="DeviceInfo.cc" hdr="DeviceInfo.h" name="DeviceInfo" language="CPP" />
-					<wxDialog wxs="wxsmith/AboutDialog.wxs" src="AboutDialog.cc" hdr="AboutDialog.h" name="AboutDialog" language="CPP" />
-				</resources>
-			</wxsmith>
-		</Extensions>
-	</Project>
+  <FileVersion major="1" minor="6" />
+  <Project>
+    <Option title="LibreScribe" />
+    <Option pch_mode="2" />
+    <Option compiler="gcc" />
+    <Build>
+      <Target title="Debug">
+	<Option output="bin/Debug/LibreScribe" prefix_auto="1" extension_auto="1" />
+	<Option object_output="obj/Debug/" />
+	<Option type="0" />
+	<Option compiler="gcc" />
+	<Option projectLinkerOptionsRelation="2" />
+	<Compiler>
+	  <Add option="-O3" />
+	  <Add option="-g" />
+	</Compiler>
+      </Target>
+      <Target title="Release">
+	<Option output="bin/Release/LibreScribe" prefix_auto="1" extension_auto="1" />
+	<Option object_output="obj/Release/" />
+	<Option type="0" />
+	<Option compiler="gcc" />
+	<Option projectLinkerOptionsRelation="2" />
+	<Compiler>
+	  <Add option="-O3" />
+	</Compiler>
+	<Linker>
+	  <Add option="-s" />
+	</Linker>
+      </Target>
+    </Build>
+    <Compiler>
+      <Add option="-Wall" />
+      <Add option="`wx-config-2.8 --cflags`" />
+      <Add option="-Winvalid-pch" />
+      <Add option="-include wx_pch.h" />
+      <Add option="`python-config --include`" />
+      <Add option="`pkg-config --libs --cflags glib-2.0`" />
+      <Add option="`pkg-config libusb-1.0 --cflags`" />
+      <Add option="-DWX_PRECOMP" />
+      <Add directory="/usr/include/libxml2" />
+      <Add directory="include" />
+    </Compiler>
+    <Linker>
+      <Add library="`wx-config-2.8 --libs` `pkg-config --libs --cflags glib-2.0` `python-config --libs`" />
+      <Add option="-include wx_pch.h -Winvalid-pch" />
+      <Add library="openobex" />
+      <Add library="`pkg-config libusb-1.0 --libs`" />
+      <Add library="xml2" />
+      <Add library="udev" />
+    </Linker>
+    <ExtraCommands>
+      <Add before="cd $(PROJECT_DIRECTORY) &amp;&amp; rm -rfv ./bin" />
+      <Add after="cd $(PROJECT_DIRECTORY)" />
+      <Add after="find ./bin/ -mindepth 1 -maxdepth 1 -type d | xargs -n 1 cp -rfv -L ./res ./xdg" />
+      <Add after="find ./bin/ -mindepth 1 -maxdepth 1 -type d | xargs -n 1 cp -fv -L ./stf.py ./convert_stfs.sh" />
+      <Mode after="always" />
+    </ExtraCommands>
+    <Unit filename="src/AboutDialog.cc" />
+    <Unit filename="include/AboutDialog.h" />
+    <Unit filename="src/DeviceInfo.cc" />
+    <Unit filename="include/DeviceInfo.h" />
+    <Unit filename="src/GUIFrame.cc" />
+    <Unit filename="include/GUIFrame.h" />
+    <Unit filename="src/LibreScribe.cc" />
+    <Unit filename="include/LibreScribe.h" />
+    <Unit filename="include/Smartpen.h" />
+    <Unit filename="src/BackgroundMonitor.cc" />
+    <Unit filename="src/Smartpen.cc" />
+    <Unit filename="include/wx_pch.h">
+      <Option compile="1" />
+      <Option weight="0" />
+    </Unit>
+    <Unit filename="wxsmith/AboutDialog.wxs" />
+    <Unit filename="wxsmith/DeviceInfo.wxs" />
+    <Unit filename="wxsmith/GUIFrame.wxs" />
+    <Extensions>
+      <code_completion />
+      <envvars />
+      <debugger />
+      <lib_finder disable_auto="1" />
+      <wxsmith version="1">
+	<gui name="wxWidgets" src="LibreScribe.cc" main="GUIFrame" init_handlers="necessary" language="CPP" />
+	<resources>
+	  <wxFrame wxs="wxsmith/GUIFrame.wxs" src="GUIFrame.cc" hdr="GUIFrame.h" name="GUIFrame" language="CPP" />
+	  <wxDialog wxs="wxsmith/DeviceInfo.wxs" src="DeviceInfo.cc" hdr="DeviceInfo.h" name="DeviceInfo" language="CPP" />
+	  <wxDialog wxs="wxsmith/AboutDialog.wxs" src="AboutDialog.cc" hdr="AboutDialog.h" name="AboutDialog" language="CPP" />
+	</resources>
+      </wxsmith>
+    </Extensions>
+  </Project>
 </CodeBlocks_project_file>
